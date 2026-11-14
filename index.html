@@ -233,7 +233,60 @@ checkLevel = function() {
 updateWaterHistory();
         checkLevel();
 
-      </script>
+// FEATURE: RAINFALL MONITORING
+
+const rainfallCard = document.createElement("section");
+rainfallCard.className = "card";
+
+rainfallCard.innerHTML = `
+  <h2>Rainfall Monitoring</h2>
+  <p>Recent rainfall measurements</p>
+
+  <h3>12 mm</h3>
+  <p style="color:green;">Moderate Rainfall</p>
+
+  <canvas id="rainfallChart"
+    width="500" height="220"
+    style="width:100%;max-width:500px;">
+  </canvas>
+
+  <p>Rainfall readings for the last 7 days</p>
+  <small>Simulation Mode - Sample readings</small>
+`;
+
+document.querySelector("main").appendChild(rainfallCard);
+
+const rainfallCanvas =
+  document.getElementById("rainfallChart");
+
+const rainfallCtx =
+  rainfallCanvas.getContext("2d");
+
+const rainfallData = [3, 5, 8, 12, 9, 6, 4];
+
+rainfallCtx.clearRect(
+  0, 0,
+  rainfallCanvas.width,
+  rainfallCanvas.height
+);
+
+rainfallCtx.fillStyle = "#168de2";
+
+rainfallData.forEach((value, index) => {
+  const x = 25 + index * 65;
+  const height = value * 10;
+  const y = 180 - height;
+
+  rainfallCtx.fillRect(x, y, 30, height);
+
+  rainfallCtx.fillStyle = "#333";
+  rainfallCtx.font = "12px Arial";
+  rainfallCtx.fillText(value + "mm", x, y - 5);
+
+  rainfallCtx.fillStyle = "#168de2";
+  rainfallCtx.fillText("D" + (index + 1), x, 200);
+});    
+    </script>
 
 
 </body>
