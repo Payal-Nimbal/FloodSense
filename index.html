@@ -235,57 +235,50 @@ updateWaterHistory();
 
 // FEATURE: RAINFALL MONITORING
 
-const rainfallCard = document.createElement("section");
-rainfallCard.className = "card";
+const rainCardNew = document.createElement("section");
+rainCardNew.className = "card";
 
-rainfallCard.innerHTML = `
+rainCardNew.innerHTML = `
   <h2>Rainfall Monitoring</h2>
   <p>Recent rainfall measurements</p>
-
   <h3>12 mm</h3>
   <p style="color:green;">Moderate Rainfall</p>
-
-  <canvas id="rainfallChart"
+  <canvas id="rainChartNew"
     width="500" height="220"
     style="width:100%;max-width:500px;">
   </canvas>
-
   <p>Rainfall readings for the last 7 days</p>
   <small>Simulation Mode - Sample readings</small>
 `;
 
-document.querySelector("main").appendChild(rainfallCard);
+const mainArea = document.querySelector("main");
 
-const rainfallCanvas =
-  document.getElementById("rainfallChart");
+if (mainArea) {
+  mainArea.appendChild(rainCardNew);
 
-const rainfallCtx =
-  rainfallCanvas.getContext("2d");
+  const rainCanvasNew =
+    document.getElementById("rainChartNew");
 
-const rainfallData = [3, 5, 8, 12, 9, 6, 4];
+  const rainCtxNew = rainCanvasNew.getContext("2d");
 
-rainfallCtx.clearRect(
-  0, 0,
-  rainfallCanvas.width,
-  rainfallCanvas.height
-);
+  const rainValuesNew = [3, 5, 8, 12, 9, 6, 4];
 
-rainfallCtx.fillStyle = "#168de2";
+  rainValuesNew.forEach((value, index) => {
+    const x = 25 + index * 65;
+    const barHeight = value * 10;
+    const y = 180 - barHeight;
 
-rainfallData.forEach((value, index) => {
-  const x = 25 + index * 65;
-  const height = value * 10;
-  const y = 180 - height;
+    rainCtxNew.fillStyle = "#168de2";
+    rainCtxNew.fillRect(x, y, 30, barHeight);
 
-  rainfallCtx.fillRect(x, y, 30, height);
-
-  rainfallCtx.fillStyle = "#333";
-  rainfallCtx.font = "12px Arial";
-  rainfallCtx.fillText(value + "mm", x, y - 5);
-
-  rainfallCtx.fillStyle = "#168de2";
-  rainfallCtx.fillText("D" + (index + 1), x, 200);
-});    
+    rainCtxNew.fillStyle = "#333";
+    rainCtxNew.font = "12px Arial";
+    rainCtxNew.fillText(value + "mm", x, y - 5);
+    rainCtxNew.fillText("D" + (index + 1), x, 200);
+  });
+} else {
+  console.error("Main section not found!");
+}
     </script>
 
 
