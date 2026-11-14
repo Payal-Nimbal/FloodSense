@@ -1,0 +1,32 @@
+# FloodSense 🌊
+
+## Project Overview
+FloodSense is a smart flood monitoring and early warning system.
+
+## Objectives
+- Monitor water levels.
+- Detect rising water levels.
+- Generate alerts during flood conditions.
+- Help reduce flood damage.
+
+## Hardware Components
+- ESP32
+- Ultrasonic Sensor
+- Water Level Sensor
+- Buzzer
+
+## Technologies Used
+- Arduino IDE
+- Embedded C++
+- ESP32
+
+## Features
+- Real-time water level monitoring
+- Flood detection
+- Alert notification
+
+## Team Members
+- Member 1
+- Member 2
+- Member 3
+-
