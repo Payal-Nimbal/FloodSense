@@ -1,25 +1,149 @@
-<script>
-function checkLevel() {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FloodSense - Smart Flood Monitoring</title>
+    <link rel="stylesheet" href="style.css">
 
-    let level = Math.floor(Math.random() * 51);
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eaf6ff;
+            text-align: center;
+            margin: 0;
+            padding: 30px;
+        }
 
-    document.getElementById("water").innerHTML =
-        level + " cm";
+        h1 {
+            color: #0879b9;
+            font-size: 38px;
+        }
 
-    let status = document.getElementById("status");
+        h2 {
+            color: #333;
+        }
 
-    if (level < 20) {
-        status.innerHTML = "Normal Condition";
-        status.style.color = "green";
-    }
-    else if (level < 35) {
-        status.innerHTML = "WARNING! Water Level Rising";
-        status.style.color = "orange";
-    }
-    else {
-        status.innerHTML = "🚨 FLOOD ALERT!";
-        status.style.color = "red";
-        alert("Flood Alert! High Water Level Detected");
-    }
-}
-</script>
+        .card {
+            background: white;
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 450px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px #aaa;
+        }
+
+        .level {
+            font-size: 40px;
+            color: #0879b9;
+            margin: 20px;
+        }
+
+        #status {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        input[type="range"] {
+            width: 90%;
+            margin: 20px 0;
+            cursor: pointer;
+        }
+
+        button {
+            padding: 12px 20px;
+            background: #0879b9;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #055b8a;
+        }
+
+        .info {
+            color: #555;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🌊 FloodSense</h1>
+    <h2>Smart Flood Monitoring System</h2>
+
+    <div class="card">
+
+        <h3>Water Level Monitoring</h3>
+
+        <p class="level" id="water">10 cm</p>
+
+        <h3 id="status">✅ Normal Condition</h3>
+
+        <p>Adjust the slider to simulate water level:</p>
+
+        <input type="range"
+               id="waterSlider"
+               min="0"
+               max="50"
+               value="10"
+               oninput="checkLevel()">
+
+        <p class="info">
+            Water Level: 0 - 50 cm
+        </p>
+
+        <button onclick="checkLevel()">
+            Check Water Level
+        </button>
+
+        <p class="info">
+            Software-based Flood Simulation
+        </p>
+
+    </div>
+
+    <script>
+
+        function checkLevel() {
+
+            let level = Number(
+                document.getElementById("waterSlider").value
+            );
+
+            document.getElementById("water").innerHTML =
+                level + " cm";
+
+            let status = document.getElementById("status");
+
+            if (level < 20) {
+
+                status.innerHTML = "✅ Normal Condition";
+                status.style.color = "green";
+
+            }
+
+            else if (level < 35) {
+
+                status.innerHTML = "⚠️ Warning! Water Rising";
+                status.style.color = "orange";
+
+            }
+
+            else {
+
+                status.innerHTML = "🚨 FLOOD ALERT!";
+                status.style.color = "red";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>
