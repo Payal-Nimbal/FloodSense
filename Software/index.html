@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FloodSense Dashboard</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background: #eaf6ff;
+            padding: 30px;
+        }
+        .card {
+            background: white;
+            padding: 25px;
+            margin: 30px auto;
+            max-width: 400px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px #aaa;
+        }
+        h1 { color: #0879b9; }
+        .level {
+            font-size: 35px;
+            color: #0879b9;
+        }
+        button {
+            padding: 12px 20px;
+            background: #0879b9;
+            color: white;
+            border: none;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🌊 FloodSense</h1>
+<h2>Smart Flood Monitoring System</h2>
+
+<div class="card">
+    <h3>Water Level Monitoring</h3>
+    <p class="level" id="water">20 cm</p>
+    <h3 id="status">Normal Condition</h3>
+    <button onclick="checkLevel()">Check Water Level</button>
+</div>
+
+<script>
+function checkLevel() {
+    let level = Math.floor(Math.random() * 40) + 1;
+
+    document.getElementById("water").innerHTML =
+        level + " cm";
+
+    if (level < 10) {
+        document.getElementById("status").innerHTML =
+            "🚨 FLOOD ALERT!";
+    } else {
+        document.getElementById("status").innerHTML =
+            "✅ Normal Condition";
+    }
+}
+</script>
+
+</body>
+</html>
