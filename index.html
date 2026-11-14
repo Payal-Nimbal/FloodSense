@@ -5,132 +5,145 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FloodSense - Smart Flood Monitoring</title>
     <link rel="stylesheet" href="style.css">
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #eaf6ff;
-            text-align: center;
-            margin: 0;
-            padding: 30px;
-        }
-
-        h1 {
-            color: #0879b9;
-            font-size: 38px;
-        }
-
-        h2 {
-            color: #333;
-        }
-
-        .card {
-            background: white;
-            padding: 30px;
-            margin: 30px auto;
-            max-width: 450px;
-            border-radius: 15px;
-            box-shadow: 0 2px 10px #aaa;
-        }
-
-        .level {
-            font-size: 40px;
-            color: #0879b9;
-            margin: 20px;
-        }
-
-        #status {
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        input[type="range"] {
-            width: 90%;
-            margin: 20px 0;
-            cursor: pointer;
-        }
-
-        button {
-            padding: 12px 20px;
-            background: #0879b9;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        button:hover {
-            background: #055b8a;
-        }
-
-        .info {
-            color: #555;
-            font-size: 14px;
-        }
-    </style>
 </head>
 
 <body>
 
-    <h1>🌊 FloodSense</h1>
-    <h2>Smart Flood Monitoring System</h2>
+    <!-- FEATURE 1: HEADER -->
+    <header>
+        <h1>🌊 FloodSense</h1>
+        <h2>Smart Flood Monitoring System</h2>
+        <p>Software-Based Flood Simulation</p>
+    </header>
 
-    <div class="card">
+    <main>
 
-        <h3>Water Level Monitoring</h3>
+        <!-- FEATURE 2: WATER LEVEL MONITORING -->
+        <section class="card">
+            <h2>Water Level Monitoring</h2>
 
-        <p class="level" id="water">10 cm</p>
+            <h1 id="water">19 cm</h1>
 
-        <h3 id="status">✅ Normal Condition</h3>
+            <p id="status">✅ Normal Condition</p>
 
-        <p>Adjust the slider to simulate water level:</p>
+            <label for="waterSlider">
+                Adjust Water Level:
+            </label>
 
-        <input type="range"
-               id="waterSlider"
-               min="0"
-               max="50"
-               value="10"
-               oninput="checkLevel()">
+            <input
+                type="range"
+                id="waterSlider"
+                min="0"
+                max="50"
+                value="19"
+                oninput="updateWaterLevel()"
+            >
 
-        <p class="info">
-            Water Level: 0 - 50 cm
-        </p>
+            <p>Water Level: <span id="sliderValue">19</span> cm</p>
 
-        <button onclick="checkLevel()">
-            Check Water Level
-        </button>
+            <button onclick="checkLevel()">
+                Check Water Level
+            </button>
+        </section>
 
-        <p class="info">
-            Software-based Flood Simulation
-        </p>
+        <!-- FEATURE 3: FLOOD RISK STATUS -->
+        <section class="card">
+            <h2>Flood Risk Status</h2>
 
-    </div>
+            <h2 id="risk">LOW RISK</h2>
+
+            <p id="riskDescription">
+                Water level is within the normal range.
+            </p>
+        </section>
+
+        <!-- FEATURE 4: ALERT MESSAGE -->
+        <section class="card">
+            <h2>Flood Alert Notification</h2>
+
+            <p id="alert">
+                ✅ No Flood Alert. Safe Condition.
+            </p>
+
+            <p id="recommendation">
+                Continue monitoring the water level.
+            </p>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>FloodSense © 2026 | Smart Flood Monitoring System</p>
+        <p>Simulation Mode - No Hardware Required</p>
+    </footer>
 
     <script>
 
-        function checkLevel() {
+        // INITIAL WATER LEVEL
+        let currentLevel = 19;
 
-            let level = Number(
+        // UPDATE WATER LEVEL USING SLIDER
+        function updateWaterLevel() {
+
+            currentLevel = Number(
                 document.getElementById("waterSlider").value
             );
 
-            document.getElementById("water").innerHTML =
-                level + " cm";
+            document.getElementById("sliderValue").innerHTML =
+                currentLevel;
 
+            checkLevel();
+        }
+
+        // CHECK FLOOD LEVEL
+        function checkLevel() {
+
+            let water = document.getElementById("water");
             let status = document.getElementById("status");
+            let risk = document.getElementById("risk");
+            let description =
+                document.getElementById("riskDescription");
+            let alert = document.getElementById("alert");
+            let recommendation =
+                document.getElementById("recommendation");
 
-            if (level < 20) {
+            water.innerHTML = currentLevel + " cm";
+
+            if (currentLevel < 20) {
 
                 status.innerHTML = "✅ Normal Condition";
                 status.style.color = "green";
 
+                risk.innerHTML = "LOW RISK";
+                risk.style.color = "green";
+
+                description.innerHTML =
+                    "Water level is within the normal range.";
+
+                alert.innerHTML =
+                    "✅ No Flood Alert. Safe Condition.";
+
+                recommendation.innerHTML =
+                    "Continue monitoring the water level.";
+
             }
 
-            else if (level < 35) {
+            else if (currentLevel < 35) {
 
-                status.innerHTML = "⚠️ Warning! Water Rising";
+                status.innerHTML = "⚠️ WARNING! Water Rising";
                 status.style.color = "orange";
+
+                risk.innerHTML = "MEDIUM RISK";
+                risk.style.color = "orange";
+
+                description.innerHTML =
+                    "Water level is increasing. Stay alert.";
+
+                alert.innerHTML =
+                    "⚠️ Warning! Water level is rising.";
+
+                recommendation.innerHTML =
+                    "Be prepared and monitor the situation.";
 
             }
 
@@ -139,11 +152,34 @@
                 status.innerHTML = "🚨 FLOOD ALERT!";
                 status.style.color = "red";
 
-            }
+                risk.innerHTML = "HIGH RISK";
+                risk.style.color = "red";
 
+                description.innerHTML =
+                    "Dangerous water level detected.";
+
+                alert.innerHTML =
+                    "🚨 FLOOD ALERT! High water level detected.";
+
+                recommendation.innerHTML =
+                    "Move to a safe location and contact emergency services.";
+
+                alertMessage();
+            }
         }
+
+        // FLOOD ALERT NOTIFICATION
+        function alertMessage() {
+            if (currentLevel >= 35) {
+                console.log("FLOOD ALERT! High water level detected.");
+            }
+        }
+
+        // INITIAL DISPLAY
+        checkLevel();
 
     </script>
 
 </body>
 </html>
+
