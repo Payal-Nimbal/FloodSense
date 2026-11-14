@@ -1,38 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>FloodSense Dashboard</title>
-    <link rel="stylesheet"
-href="style.css">
+  <title>FloodSense Dashboard</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>🌊 FloodSense</h1>
-<h2>Smart Flood Monitoring System</h2>
+  <h1>🌊 FloodSense</h1>
+  <h2>Smart Flood Monitoring System</h2>
 
-<div class="card">
+  <div class="card">
     <h3>Water Level Monitoring</h3>
+
     <p class="level" id="water">20 cm</p>
+
     <h3 id="status">Normal Condition</h3>
-    <button onclick="checkLevel()">Check Water Level</button>
-</div>
 
-<script>
-function checkLevel() {
-    let level = Math.floor(Math.random() * 40) + 1;
+    <input type="range" id="sensor"
+      min="0" max="100" value="20"
+      oninput="updateLevel()">
 
-    document.getElementById("water").innerHTML =
+    <p>Simulated Water Level</p>
+
+    <button onclick="simulateLevel()">
+      Simulate Water Level
+    </button>
+  </div>
+
+  <script>
+    function updateLevel() {
+      let level =
+        Number(document.getElementById("sensor").value);
+
+      document.getElementById("water").innerText =
         level + " cm";
 
-    if (level < 10) {
-        document.getElementById("status").innerHTML =
-            "🚨 FLOOD ALERT!";
-    } else {
-        document.getElementById("status").innerHTML =
-            "✅ Normal Condition";
+      let status = document.getElementById("status");
+
+      if (level >= 60) {
+        status.innerText = "🚨 FLOOD ALERT!";
+      }
+      else if (level >= 30) {
+        status.innerText = "⚠️ WARNING!";
+      }
+      else {
+        status.innerText = "✅ NORMAL CONDITION";
+      }
     }
-}
-</script>
+
+    function simulateLevel() {
+      let level = Math.floor(Math.random() * 101);
+
+      document.getElementById("sensor").value = level;
+
+      updateLevel();
+    }
+  </script>
 
 </body>
 </html>
