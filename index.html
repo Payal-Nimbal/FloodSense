@@ -176,6 +176,61 @@
         }
 
         // INITIAL DISPLAY
+        // FEATURE: WATER LEVEL HISTORY GRAPH
+
+const historyCard = document.createElement("section");
+historyCard.className = "card";
+historyCard.innerHTML = `
+  <h2>Water Level History</h2>
+  <p>Recent water level readings</p>
+  <canvas id="waterHistoryChart"
+    width="500" height="220"
+    style="width:100%;max-width:500px;">
+  </canvas>
+`;
+
+document.querySelector("main").appendChild(historyCard);
+
+const waterHistory = [];
+
+function updateWaterHistory() {
+  waterHistory.push(currentLevel);
+
+  if (waterHistory.length > 15) {
+    waterHistory.shift();
+  }
+
+  const canvas = document.getElementById("waterHistoryChart");
+  const ctx = canvas.getContext("2d");
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  ctx.beginPath();
+  ctx.strokeStyle = "#168de2";
+  ctx.lineWidth = 3;
+
+  waterHistory.forEach((level, index) => {
+    const x = 20 + index * (460 / 14);
+    const y = 190 - (level / 50) * 160;
+
+    if (index === 0) {
+      ctx.moveTo(x, y);
+    } else {
+      ctx.lineTo(x, y);
+    }
+  });
+
+  ctx.stroke();
+}
+
+const originalCheckLevel = checkLevel;
+
+checkLevel = function() {
+  originalCheckLevel();
+  updateWaterHistory();
+};
+
+updateWaterHistory();
         checkLevel();
 
     </script>
